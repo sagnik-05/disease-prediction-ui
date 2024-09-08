@@ -32,7 +32,7 @@ export default function Contact() {
         </a>
       </div>
       <div className="mt-64"></div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
