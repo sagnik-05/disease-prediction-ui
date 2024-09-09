@@ -1,6 +1,22 @@
+import { useClerk, useUser } from "@clerk/nextjs";
 import LottieAnimation from "./LottieAnimation";
 
 export default function Main() {
+  const { openSignIn } = useClerk(); // Function to open the sign-in modal
+  const { isSignedIn } = useUser(); // Check if the user is signed in
+
+  // Function to handle the button clicks
+  const handleProtectedClick = (url) => {
+    if (isSignedIn) {
+      // If the user is signed in, go to the target URL
+      window.open(url, "_blank");
+    } else {
+      // If the user is not signed in, open the sign-in modal
+      alert("Sign-in required to access this feature.");
+      openSignIn();
+    }
+  };
+
   return (
     <section className="text-gray-600 body-font">
       <div className="max-w-7xl mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
@@ -16,20 +32,22 @@ export default function Main() {
           </p>
           <div className="flex justify-center">
             <div>
-              <a
+              <button
+                onClick={() =>
+                  handleProtectedClick("https://check-your-heart-web.streamlit.app/")
+                }
                 className="inline-flex items-center px-5 py-3 mt-2 font-medium text-white transition duration-500 ease-in-out transform bg-transparent border rounded-lg bg-green-700 mr-5"
-                href="https://check-your-heart-web.streamlit.app/"
-                target="_blank"
               >
                 <span className="justify-center">Heart Diagnosis</span>
-              </a>
-              <a
+              </button>
+              <button
+                onClick={() =>
+                  handleProtectedClick("https://check-your-diabetes.streamlit.app/")
+                }
                 className="inline-flex items-center px-5 py-3 mt-2 font-medium text-white transition duration-500 ease-in-out transform bg-transparent border rounded-lg bg-green-700"
-                href="https://check-your-diabetes.streamlit.app/"
-                target="_blank"
               >
                 <span className="justify-center">Diabetes Diagnosis</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>

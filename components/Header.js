@@ -1,8 +1,24 @@
 import React from "react";
-import Link from 'next/link';
+import { useClerk, useUser, UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/router";
 
 export default function Header() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const { openSignIn } = useClerk();
+  const { isSignedIn } = useUser();
+  const router = useRouter();
+
+  // Function to handle clicks on protected buttons
+  const handleProtectedClick = (url) => {
+    if (isSignedIn) {
+      router.push(url);
+    } else {
+      openSignIn();
+    }
+  };
+
+  // Function to check if the button is active
+  const isActive = (route) => route === router.pathname;
 
   return (
     <div className="fixed top-0 w-full z-30 clearNav md:bg-opacity-90 transition duration-300 ease-in-out">
@@ -13,11 +29,11 @@ export default function Header() {
             className="text-lg font-semibold rounded-lg tracking-widest focus:outline-none focus:shadow-outline"
           >
             <h1 className="text-4xl Avenir tracking-tighter text-gray-900 md:text-4x1 lg:text-3xl">
-              NINE4
+              DiagnoCare
             </h1>
           </a>
           <button
-            className="text-white cursor-pointer leading-none px-3 py-1 md:hidden outline-none focus:outline-none "
+            className="text-white cursor-pointer leading-none px-3 py-1 md:hidden outline-none focus:outline-none"
             type="button"
             aria-label="button"
             onClick={() => setNavbarOpen(!navbarOpen)}
@@ -46,32 +62,39 @@ export default function Header() {
             (navbarOpen ? " flex" : " hidden")
           }
         >
-          <nav className="flex-col flex-grow ">
+          <nav className="flex-col flex-grow">
             <ul className="flex flex-grow justify-end flex-wrap items-center">
               <li>
-                <a
-                  href="/"
-                  className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out"
+                <button
+                  className={`font-medium px-5 py-3 flex items-center transition duration-150 ease-in-out ${
+                    isActive("/") ? "text-green-700" : "text-gray-600"
+                  } hover:text-gray-900`}
+                  onClick={() => router.push("/")}
                 >
                   Diagnosis
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="/yourhealth"
-                  className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out"
+                <button
+                  onClick={() => handleProtectedClick("/yourhealth")}
+                  className={`font-medium px-5 py-3 flex items-center transition duration-150 ease-in-out ${
+                    isActive("/yourhealth") ? "text-green-700" : "text-gray-600"
+                  } hover:text-gray-900`}
                 >
-                  Know your health
-                </a>
+                  About Diseases
+                </button>
               </li>
               <li>
-                <a
-                  className="inline-flex items-center px-4 py-2 mt-2 font-medium text-white transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 bg-gray-900"
-                  href="/"
-                >
-                  <span className="justify-center">Login</span>
-          
-                </a>
+                {isSignedIn ? (
+                  <UserButton />
+                ) : (
+                  <button
+                    onClick={openSignIn}
+                    className="inline-flex items-center px-4 py-2 mt-2 font-medium text-white transition duration-500 ease-in-out transform bg-transparent rounded-lg text-md md:mt-0 md:ml-4 bg-gray-900"
+                  >
+                    <span className="justify-center">Login</span>
+                  </button>
+                )}
               </li>
             </ul>
           </nav>
