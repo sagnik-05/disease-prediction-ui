@@ -1,4 +1,4 @@
-# Disease Prediction UI
+# Disease Prediction ~ DiagnoCare
 
 Welcome to the Disease Prediction UI repository! This project provides a user interface for predicting health risks related to heart disease and diabetes.
 
