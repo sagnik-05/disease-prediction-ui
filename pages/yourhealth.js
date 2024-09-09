@@ -39,28 +39,29 @@ const YourHealth = () => {
         <div className="flex justify-center mb-8 space-x-4">
           <button
             onClick={() => handleTabChange("heart")}
-            className={`relative inline-flex items-center border-0 py-2 px-6 focus:outline-none rounded text-lg transition-colors duration-300 ease-in-out ${
+            className={`relative inline-flex items-center justify-center border-0 py-3 px-8 focus:outline-none rounded-lg text-lg font-semibold transition-all duration-300 ease-in-out transform hover:scale-105 shadow-2xl ${
               activeTab === "heart"
-                ? "bg-indigo-600 text-white"
-                : "bg-indigo-500 text-gray-100 hover:bg-indigo-600"
+                ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
+                : "bg-gradient-to-r from-indigo-500 to-purple-500 text-gray-100 hover:from-indigo-600 hover:to-purple-600"
             }`}
           >
-            Heart
+            <span className="mr-2">❤️</span> Heart
             {activeTab === "heart" && (
-              <div className="absolute inset-0 bg-indigo-300 opacity-30 rounded-md"></div>
+              <div className="absolute inset-0 bg-indigo-400 opacity-20 rounded-lg animate-pulse"></div>
             )}
           </button>
+
           <button
             onClick={() => handleTabChange("diabetes")}
-            className={`relative inline-flex items-center border-0 py-2 px-6 focus:outline-none rounded text-lg transition-colors duration-300 ease-in-out ${
+            className={`relative inline-flex items-center justify-center border-0 py-3 px-8 focus:outline-none rounded-lg text-lg font-semibold transition-all duration-300 ease-in-out transform hover:scale-105 shadow-2xl ${
               activeTab === "diabetes"
-                ? "bg-green-600 text-white"
-                : "bg-green-500 text-gray-100 hover:bg-green-600"
+                ? "bg-gradient-to-r from-orange-500 to-yellow-500 text-black"
+                : "bg-gradient-to-r from-orange-400 to-yellow-400 text-black-100 hover:from-orange-500 hover:to-yellow-500"
             }`}
           >
-            Diabetes
+            <span className="mr-2">🩺</span> Diabetes
             {activeTab === "diabetes" && (
-              <div className="absolute inset-0 bg-green-300 opacity-30 rounded-md"></div>
+              <div className="absolute inset-0 bg-yellow-300 opacity-30 rounded-lg animate-pulse"></div>
             )}
           </button>
         </div>
